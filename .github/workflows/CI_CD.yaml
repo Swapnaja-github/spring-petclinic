@@ -3,7 +3,7 @@ name: Java CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - master
     tags:
       - '*'
   workflow_dispatch:
@@ -50,16 +50,16 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@v2.2.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-       #   SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
           SONAR_HOST_URL: "http://18.101.7.150:9000/"
+
       - name: Run SonarQube Analysis
-        run: mvn -X verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=first_sonarqube_project -Dsonar.projectName='first_sonarqube_project'
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=first_sonarqube_project -Dsonar.projectName='first_sonarqube_project'
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: "http://18.101.7.150:9000/
-         # SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+          #SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+          SONAR_HOST_URL: "http://18.101.7.150:9000/"
 
-       # Step 7: Publish Artifacts
+      # Step 7: Publish Artifacts
       - name: Publish Artifacts
         uses: actions/upload-artifact@v4
         with:
