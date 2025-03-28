@@ -82,11 +82,10 @@ jobs:
         with:
           name: Package
 
-      # Step 4: Decode PEM key from Secrets and Save as .pem file
-      - name: Decode PEM Key from Secrets
-        run: |
-          echo "${{ secrets.AWS_PEM_KEY }}" | base64 --decode > swap_key_spain.pem
-          chmod 600 swap_key_spain.pem
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.AWS?PEM?KEY }}
 
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
