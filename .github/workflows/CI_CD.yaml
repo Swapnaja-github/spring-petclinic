@@ -90,12 +90,12 @@ jobs:
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
         run: |
-          scp -i swap_key_spain.pem target/spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar ubuntu@18.101.7.150:/home/ubuntu/app
+          scp -i swap_key_spain.pem target/spring-petclinic-*.jar ubuntu@18.101.7.150:/home/ubuntu/app
 
       # Step 6: SSH into EC2 and start the application
       - name: SSH into EC2 and start application
         run: |
           ssh -i swap_key_spain.pem ubuntu@18.101.7.150 <<EOF
           cd /home/ubuntu/app
-          java -jar spring-petclinic-2.3.1.BUILD-SNAPSHOT.jar
+          java -jar spring-petclinic-*.jar
           EOF
