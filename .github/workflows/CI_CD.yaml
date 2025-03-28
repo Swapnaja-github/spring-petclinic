@@ -91,7 +91,8 @@ jobs:
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
         run: |
-          scp -i swap_key_spain.pem staging/*.jar ubuntu@18.101.7.150:/home/ubuntu/app
+          scp -o StrictHostKeyChecking=no -i swap_key_spain.pem staging/*.jar ubuntu@18.101.7.150:/home/ubuntu/app
+
 
       # Step 6: SSH into EC2 and start the application
       - name: SSH into EC2 and start application
