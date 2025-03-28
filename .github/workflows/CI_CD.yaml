@@ -86,7 +86,7 @@ jobs:
       - name: Set up SSH Key
         run: |
           echo "${{ secrets.AWS_KEP_PEM }}" > swap_key_spain.pem
-          chmod 400 swap_key_spain.pem
+          chmod 600 swap_key_spain.pem
 
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
