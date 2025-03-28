@@ -44,8 +44,8 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: "http://18.101.7.150:9000/"
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=first_sonarqube_project -Dsonar.projectName='first_sonarqube_project'
+          SONAR_HOST_URL: "http://51.92.90.162:9000/"
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=first_sonarqube_project -Dsonar.projectName='first_sonarqube_project''
 
       - name: Debug SonarQube Variables
         run: |
@@ -83,21 +83,26 @@ jobs:
           name: Package
           path: staging
 
-      - name: Set up SSH Key
-        run: |
-          echo "${{ secrets.AWS_KEP_PEM }}" > swap_key_spain.pem
-          chmod 600 swap_key_spain.pem
+  # #    - name: Set up SSH Key
+  #       run: |
+  #         echo "${{ secrets.AWS_KEP_PEM }}" > swap_key_spain2.pem
+  #         chmod 600 swap_key_spain2.pem
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.1
+        with:
+          ssh-private-key: ${{ secrets.AWS_PEM_KEY }}
 
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -i swap_key_spain.pem staging/*.jar ubuntu@18.101.7.150:/home/ubuntu/app
+          scp -o StrictHostKeyChecking=no -i swap_key_spain2.pem staging/*.jar ubuntu@51.92.90.162:/home/ubuntu/app
 
 
       # Step 6: SSH into EC2 and start the application
       - name: SSH into EC2 and start application
         run: |
-          ssh -i swap_key_spain.pem ubuntu@18.101.7.150 <<EOF
+          ssh -i swap_key_spain2.pem ubuntu@51.92.90.162 <<EOF
           cd /home/ubuntu/app
           java -jar spring-petclinic-*.jar
           EOF
