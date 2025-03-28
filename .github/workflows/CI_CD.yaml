@@ -100,9 +100,13 @@ jobs:
 
 
       # Step 6: SSH into EC2 and start the application
-      - name: SSH into EC2 and start application
-        run: |
-          ssh -i swap_key_spain2.pem ubuntu@51.92.90.162 <<EOF
-          cd /home/ubuntu/app
-          java -jar spring-petclinic-*.jar
-          EOF
+      # - name: SSH into EC2 and start application
+      #   run: |
+      #     ssh -i swap_key_spain2.pem ubuntu@51.92.90.162 <<EOF
+      #     cd /home/ubuntu/app
+      #     java -jar spring-petclinic-*.jar
+      #     EOF
+
+      - name: Start Spring PetClinic
+        run: ssh -o StrictHostKeyChecking=no ubuntu@51.92.90.162 "nohup java -jar /home/ubuntu/app/spring-petclinic-*.jar &"
+
