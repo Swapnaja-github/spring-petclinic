@@ -82,10 +82,10 @@ jobs:
         with:
           name: Package
 
-      - name: Set up SSH
-        uses: webfactory/ssh-agent@v0.8.1
-        with:
-          ssh-private-key: ${{ secrets.AWS_PEM_KEY }}
+      - name: Set up SSH Key
+        run: |
+          echo "${{ secrets.AWS_KEP_PEM }}" > swap_key_spain.pem
+          chmod 600 swap_key_spain.pem
 
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
