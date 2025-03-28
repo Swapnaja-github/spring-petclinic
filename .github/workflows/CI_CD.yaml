@@ -81,6 +81,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: Package
+          path: staging
 
       - name: Set up SSH Key
         run: |
@@ -90,7 +91,7 @@ jobs:
       # Step 5: Copy artifact to EC2 instance
       - name: Copy artifact to EC2
         run: |
-          scp -i swap_key_spain.pem target/spring-petclinic-*.jar ubuntu@18.101.7.150:/home/ubuntu/app
+          scp -i swap_key_spain.pem staging/*.jar ubuntu@18.101.7.150:/home/ubuntu/app
 
       # Step 6: SSH into EC2 and start the application
       - name: SSH into EC2 and start application
