@@ -107,6 +107,10 @@ jobs:
       #     java -jar spring-petclinic-*.jar
       #     EOF
 
-      - name: Start Spring PetClinic
-        run: ssh -o StrictHostKeyChecking=no ubuntu@51.92.90.162 "nohup java -jar /home/ubuntu/app/spring-petclinic-*.jar &"
+      # - name: Start Spring PetClinic
+      #   run: ssh -o StrictHostKeyChecking=no ubuntu@51.92.90.162 "nohup java -jar /home/ubuntu/app/spring-petclinic-*.jar &"
 
+
+      - name: Start Spring PetClinic
+        run: ssh -o StrictHostKeyChecking=no ubuntu@51.92.90.162 \
+          "nohup java -jar /home/ubuntu/app/spring-petclinic-*.jar > /dev/null 2>&1 &"
